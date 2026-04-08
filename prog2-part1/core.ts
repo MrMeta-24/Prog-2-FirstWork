@@ -35,7 +35,7 @@ async function saveToFile() {
 
 /*Implemente a função para criar*/
 
-export async function addItem(item: string,priority: Priority = "low",date?: string) {
+export async function addItem(item: string,priority: Priority = "Baixa",date?: string) {
   await loadFromFile(); // Garante que os dados estão carregados em memória
   list.push(text: item,done: false,priority,date);      // Adiciona a nova tarefa ao array `list`
   await saveToFile();   // Salva os dados atualizados no arquivo JSON
