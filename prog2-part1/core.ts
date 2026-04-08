@@ -55,7 +55,7 @@ export async function updateItem(index: number, newItem: string) {
   // Verifica se o índice é válido
   if (index < 0 || index >= list.length)
     throw new Error("Índice fora dos limites"); 
-  list[index] = newItem; // Atualiza a tarefa no array `list`
+  list[index].text = newItem; // Atualiza a tarefa no array `list`
   await saveToFile();    // Salva os dados atualizados no arquivo JSON
 }
 
