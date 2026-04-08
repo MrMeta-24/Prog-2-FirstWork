@@ -19,6 +19,17 @@ if (command === "add") {
   process.exit(0);
 }
 
+const validPriorities = ["Baixa", "Medio", "FAZ LOGO SEU PUTO"];
+  if (!validPriorities.includes(priority)) {
+    console.error("Prioridade inválida. Use: Baixa, Medio ou FAZ LOGO SEU PUTO.");
+    process.exit(1);
+  }
+
+  await todo.addItem(item, priority, date);
+  console.log(`Item "${item}" adicionado com sucesso!`);
+  process.exit(0);
+}
+
 /*Implemente a lógica para o comando "list"*/
 
 if (command === "list") {
