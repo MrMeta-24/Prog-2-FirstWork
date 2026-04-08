@@ -5,6 +5,8 @@ const command = process.argv[2];
 
 if (command === "add") {
   const item = process.argv[3];
+  let priority = process.argv[4] as any;
+  let date = process.argv[5];
   if (!item) {
     console.error("Por favor, forneça um item para adicionar.");
     process.exit(1);
