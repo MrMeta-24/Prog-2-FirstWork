@@ -14,17 +14,12 @@ bun run index.ts
 
 This project was created using `bun init` in bun v1.3.11. [Bun](https://bun.com) is a fast all-in-one JavaScript runtime.
 
-/*
-========================================
 SISTEMA DE LISTA DE TAREFAS (TODO CLI)
-========================================
 
 Este sistema permite gerenciar tarefas via terminal utilizando comandos simples.
 As tarefas possuem texto, prioridade e data opcional.
 
-----------------------------------------
 COMANDOS DISPONÍVEIS
-----------------------------------------
 
 1. Adicionar tarefa
 
@@ -121,5 +116,3 @@ OBSERVAÇÕES TÉCNICAS
 - A data é opcional e representa a data limite da tarefa
 - A prioridade possui valor padrão "low" quando não informada
 
-========================================
-*/
