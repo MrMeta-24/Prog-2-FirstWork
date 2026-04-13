@@ -53,21 +53,20 @@ export class ToDo {
   async getItems() {
     return await this.items
   }
-
   async updateItem(index: number, newItem: Item) {
     const items = await this.items;
-    if (index < 0 || index > items.length)
+    if (index < 0 || index >= items.length)
       throw new Error('Index out of bounds');
     items[index] = newItem;
-    this.saveToFile();
+    await this.saveToFile();
   }
 
   async removeItem(index: number) {
     const items = await this.items;
-    if (index < 0 || index > items.length)
+    if (index < 0 || index >= items.length)
       throw new Error('Index out of bounds');
     items.splice(index, 1);
-    this.saveToFile();
+    await this.saveToFile();
   }
 
   async findItemByDescription(description: string): Promise<Item | undefined> {
@@ -77,7 +76,7 @@ export class ToDo {
 
   async findItemByIndex(index: number): Promise<Item | undefined> {
     const items = await this.items;
-    if (index < 0 || index > items.length)
+    if (index < 0 || index >= items.length)
       throw new Error('Index out of bounds');
     return items[index];
   }
