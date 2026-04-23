@@ -6,8 +6,8 @@ const todo = new ToDo(filepath);
 const port = 3000;
 
 type ReponseZika = {
-    description: string
-}
+  description: string;
+};
 
 const server = Bun.serve({
   port: port,
@@ -26,12 +26,43 @@ const server = Bun.serve({
       });
     }
 
+    // 🆕 GET /items/search?nome=...
+    if (pathname === "/items/search" && method === "GET") {
+      try {
+        const nome = searchParams.get("nome");
+
+        if (!nome) {
+          return new Response(JSON.stringify({ error: "Query param 'nome' is required" }), {
+            status: 400,
+            headers: { "Content-Type": "application/json" }
+          });
+        }
+
+        const items = await todo.getItems();
+
+        const filteredItems = items.filter(item =>
+          item.toJSON().description.toLowerCase().includes(nome.toLowerCase())
+        );
+
+        return new Response(JSON.stringify(filteredItems.map(i => i.toJSON())), {
+          status: 200,
+          headers: { "Content-Type": "application/json" }
+        });
+
+      } catch (error: any) {
+        return new Response(JSON.stringify({ error: error.message }), {
+          status: 500,
+          headers: { "Content-Type": "application/json" }
+        });
+      }
+    }
+
     // POST /items - adicionar novo item
     if (pathname === "/items" && method === "POST") {
       try {
         const body = await request.json() as ReponseZika;
         const { description } = body;
-        
+
         if (!description) {
           return new Response(JSON.stringify({ error: "Description is required" }), {
             status: 400,
@@ -41,8 +72,11 @@ const server = Bun.serve({
 
         const item = new Item(description);
         await todo.addItem(item);
-        
-        return new Response(JSON.stringify({ message: "Item added successfully", item: item.toJSON() }), {
+
+        return new Response(JSON.stringify({
+          message: "Item added successfully",
+          item: item.toJSON()
+        }), {
           status: 201,
           headers: { "Content-Type": "application/json" }
         });
@@ -58,7 +92,7 @@ const server = Bun.serve({
     if (pathname === "/items" && method === "PUT") {
       try {
         const index = parseInt(searchParams.get("index") || "");
-        
+
         if (isNaN(index)) {
           return new Response(JSON.stringify({ error: "Invalid index parameter" }), {
             status: 400,
@@ -79,7 +113,10 @@ const server = Bun.serve({
         const item = new Item(description);
         await todo.updateItem(index, item);
 
-        return new Response(JSON.stringify({ message: "Item updated successfully", item: item.toJSON() }), {
+        return new Response(JSON.stringify({
+          message: "Item updated successfully",
+          item: item.toJSON()
+        }), {
           status: 200,
           headers: { "Content-Type": "application/json" }
         });
@@ -95,7 +132,7 @@ const server = Bun.serve({
     if (pathname === "/items" && method === "DELETE") {
       try {
         const index = parseInt(searchParams.get("index") || "");
-        
+
         if (isNaN(index)) {
           return new Response(JSON.stringify({ error: "Invalid index parameter" }), {
             status: 400,
@@ -104,8 +141,10 @@ const server = Bun.serve({
         }
 
         await todo.removeItem(index);
-        
-        return new Response(JSON.stringify({ message: "Item removed successfully" }), {
+
+        return new Response(JSON.stringify({
+          message: "Item removed successfully"
+        }), {
           status: 200,
           headers: { "Content-Type": "application/json" }
         });
