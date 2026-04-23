@@ -26,7 +26,7 @@ const server = Bun.serve({
       });
     }
 
-    // Foi implementado um novo endpoint REST  GET /items/search?nome=...
+    // implementei um novo endpoint REST  GET /items/search?nome=...,no caso o filtro da att 3
     if (pathname === "/items/search" && method === "GET") {
       try {
         const nome = searchParams.get("nome");
