@@ -26,7 +26,7 @@ const server = Bun.serve({
       });
     }
 
-    // 🆕 GET /items/search?nome=...
+    // Foi implementado um novo endpoint REST  GET /items/search?nome=...
     if (pathname === "/items/search" && method === "GET") {
       try {
         const nome = searchParams.get("nome");
