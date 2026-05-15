@@ -52,6 +52,24 @@ const server = Bun.serve({
       },
     },
 
+// att extra
+  async fetch(req) {
+    if (cache.has(req.url)) {
+      const response = cache.get(req.url)!;
+      return response.clone() as Response; 
+    }
+    const url = new URL(req.url);
+    const path = url.pathname;
+    const filePath = (path === '/')
+      ? './public/index.html'
+      : `./public${path}`;
+    const file = Bun.file(filePath);
+ if (await file.exists()) {
+      const buffer = await file.arrayBuffer(); 
+      const response = new Response(buffer, { headers: { "Content-Type": file.type } }); 
+      return response; 
+    }
+// Fim da att extra
     // EXEMPLO BÁSICO
 
     "/api/exemplo": {
